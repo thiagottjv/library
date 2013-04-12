@@ -1,0 +1,36 @@
+<div class="tittle_page">
+	<h1>Library Project</h1>
+
+	<h2 style="text-align:left;">Choose your book:</h2>
+	<div>
+		<%= form_for(:library) do |f| %>
+			<div style="margin:10px 0;">
+		    	<%= f.label :name %>
+			    <%= f.text_field(:name, {:value => "Write the name of your book"}) %>
+
+			    <%= f.label :author %>
+			    <%= f.text_field(:author, {:value => "Write the name of the author"}) %>
+			</div>
+	    	Select a Book:
+			<select id="library_book_id" name="library[book_id]">
+				<option value="" disabled="disabled">Type name or author of the book to search</option>
+			</select>
+		<% end %>
+		<div style="display:none;">
+			<%= select("library", "book_id2", @books.collect {|b| [ b.name, b.id_book ] }, {:prompt => 'Select a Book'}) %>
+		</div>
+	</div>
+	<div style="width:100%;height:300px;margin-top:20px;">
+		<% @books.each do |book| %>
+			<div class="books" id="book_<%= book.id_book %>">
+				<img src="<%= book.image_url %>">
+				<div>
+					<div><h2 class="name" id="name_<%= book.id_book %>"><%= book.name %></h2></div>
+					<div><b>Author:</b> <span class="author" id="author_<%= book.id_book %>"><%= book.author %></span></div>
+					<div><b>Added:</b> <%= book.added.strftime('%B %d, %Y') %></div>
+					<div><b>Description:</b><br><%= book.description %></div>
+				</div>
+		  </div>
+		<% end %>
+	</div>
+</div>

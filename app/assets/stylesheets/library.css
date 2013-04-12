@@ -1,0 +1,25 @@
+.tittle_page{
+	
+}
+.books{
+	display: none;
+	text-align: left;
+	height: 300px;
+}
+.books img{
+	display: inline-block;
+	margin-right: 20px;
+	vertical-align: top;
+	height: 300px;
+}
+.books>div{
+	display: inline-block;
+	vertical-align: top;
+	width: 500px;
+}
+.books>div>div{
+	margin-bottom: 10px;
+}
+#library_name{
+	margin-right: 20px;
+}
