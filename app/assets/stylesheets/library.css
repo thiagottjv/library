@@ -1,6 +1,3 @@
-.tittle_page{
-	
-}
 .books{
 	display: none;
 	text-align: left;
@@ -19,6 +16,14 @@
 }
 .books>div>div{
 	margin-bottom: 10px;
+}
+.books span.available{
+	color: green;
+	font-weight: bold;
+}
+.books span.unavailable{
+	color: red;
+	font-weight: bold;
 }
 #library_name{
 	margin-right: 20px;

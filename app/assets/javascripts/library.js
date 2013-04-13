@@ -62,7 +62,7 @@ function populateSelect(arr){
 	if(arr.length == 0){
 		jQuery('#library_book_id').html("<option value='' disabled='disabled'>Type name or author to search</option>");
 	}else{
-		jQuery('#library_book_id').html("");
+		jQuery('#library_book_id').html("<option value=''>Select a Book</option>");
 		for(var i = 0;i<arr.length;i++){
 			var id = arr[i];
 			var option = jQuery('#library_book_id2 option[value='+id+']').clone();

@@ -1,36 +1,79 @@
-<div class="tittle_page">
-	<h1>Library Project</h1>
-
+<div>
 	<h2 style="text-align:left;">Choose your book:</h2>
 	<div>
 		<%= form_for(:library) do |f| %>
 			<div style="margin:10px 0;">
-		    	<%= f.label :name %>
-			    <%= f.text_field(:name, {:value => "Write the name of your book"}) %>
+				<%= f.label :name %>
+				<%= f.text_field(:name, {:value => "Write the name of your book"}) %>
 
-			    <%= f.label :author %>
-			    <%= f.text_field(:author, {:value => "Write the name of the author"}) %>
+				<%= f.label :author %>
+				<%= f.text_field(:author, {:value => "Write the name of the author"}) %>
 			</div>
-	    	Select a Book:
-			<select id="library_book_id" name="library[book_id]">
-				<option value="" disabled="disabled">Type name or author of the book to search</option>
-			</select>
+				Select a Book:
+			<%= select("library", "book_id", @books.collect {|b| [ b.name, b.id ] }, {:prompt => 'Select a Book'}) %>
 		<% end %>
 		<div style="display:none;">
-			<%= select("library", "book_id2", @books.collect {|b| [ b.name, b.id_book ] }, {:prompt => 'Select a Book'}) %>
+			<%= select("library", "book_id2", @books.collect {|b| [ b.name, b.id ] }, {:prompt => 'Select a Book'}) %>
 		</div>
 	</div>
 	<div style="width:100%;height:300px;margin-top:20px;">
-		<% @books.each do |book| %>
-			<div class="books" id="book_<%= book.id_book %>">
+		<% 
+		@books.each do |book| 
+			last_rent = book.rents[book.rents.length-1]
+			available = 1
+			if(book.rents.length > 0 && last_rent.rent_type == 0)
+				available = 0
+			end
+			%>
+			<div class="books" id="book_<%= book.id %>">
 				<img src="<%= book.image_url %>">
 				<div>
-					<div><h2 class="name" id="name_<%= book.id_book %>"><%= book.name %></h2></div>
-					<div><b>Author:</b> <span class="author" id="author_<%= book.id_book %>"><%= book.author %></span></div>
-					<div><b>Added:</b> <%= book.added.strftime('%B %d, %Y') %></div>
+					<div><h2 class="name" id="name_<%= book.id %>"><%= book.name %></h2></div>
+					<div><b>Author:</b> <span class="author" id="author_<%= book.id %>"><%= book.author %></span></div>
+					<div><b>Added:</b> <%= book.added.to_time.strftime('%B %d, %Y') %></div>
+					<div><b>Status:</b>
+						<% if(book.rents.length > 0 && last_rent.rent_type == 0) %>
+							<span class="unavailable">Unavailable</span>
+							<div style="padding-bottom:10px;"><b>Rent Date:</b> <%= last_rent.date.to_time.strftime('%B %d, %Y') %></div>
+						<% else %>
+							<span class="available">Available</span>
+						<% end %>
+					</div>
 					<div><b>Description:</b><br><%= book.description %></div>
+					<div style="margin-top:20px;">
+						<a class="btnStartDisplay" href="Javascript:" onclick="submit_book_<%= book.id %>.submit();" name="gray" style="float:right;">
+							<div>
+								<div style="text-align: center;">
+									<% if(available == 0) %>
+										return this book
+									<% else %>
+										rent this book
+									<% end %>
+								</div>
+							</div>
+						</a>
+						<%= form_for :rent, :url => "/rent/new", :html => {:name => "submit_book_#{book.id}"} do |f| %>
+							<%= f.hidden_field :book_id, :value => book.id %>
+							<% 
+							if(available == 0)
+								if(last_rent.date.to_time < (Time.now - 7.days))
+								%>
+									<span style="color:red;">
+								<% else %>
+									<span style="color:green;">
+								<% end %>
+									<%= distance_of_time_in_words_to_now(last_rent.date.to_time, false) %> since the book was rented
+								</span>
+								<%= f.hidden_field :user_id, :value => last_rent.user_id %>
+								<%= f.hidden_field :rent_type, :value => 1 %>
+							<% else %>
+								<b>Rent to student:</b> <%= select("rent", "user_id", @users.collect {|u| [ u.name, u.id ] }) %>
+								<%= f.hidden_field :rent_type, :value => 0 %>
+							<% end %>
+						<% end %>
+					</div>
 				</div>
-		  </div>
+			</div>
 		<% end %>
 	</div>
 </div>

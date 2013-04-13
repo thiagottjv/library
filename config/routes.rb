@@ -1,4 +1,5 @@
 Library::Application.routes.draw do
+  match '/rent/new' => 'rent#new'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
