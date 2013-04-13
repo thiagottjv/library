@@ -6,7 +6,7 @@ class CreateBooks < ActiveRecord::Migration
       t.string :author
       t.datetime :added
       t.text :description
-      t.varchar :image_url
+      t.string :image_url
 
       t.timestamps
     end
