@@ -18,8 +18,9 @@
 	</div>
 	<div style="width:100%;height:300px;margin-top:20px;">
 		<% 
-		@books.each do |book| 
+		@books.each do |book|
 			last_rent = book.rents[book.rents.length-1]
+
 			available = 1
 			if(book.rents.length > 0 && last_rent.rent_type == 0)
 				available = 0
@@ -34,7 +35,8 @@
 					<div><b>Status:</b>
 						<% if(book.rents.length > 0 && last_rent.rent_type == 0) %>
 							<span class="unavailable">Unavailable</span>
-							<div style="padding-bottom:10px;"><b>Rent Date:</b> <%= last_rent.date.to_time.strftime('%B %d, %Y') %></div>
+							<div><b>Rent Date:</b> <%= last_rent.date.to_time.strftime('%B %d, %Y') %></div>
+							<div style="padding-bottom:10px;"><b>Rent by:</b> <%= last_rent.user[:name] %> - <%= last_rent.user[:email] %></div>
 						<% else %>
 							<span class="available">Available</span>
 						<% end %>
@@ -42,15 +44,11 @@
 					<div><b>Description:</b><br><%= book.description %></div>
 					<div style="margin-top:20px;">
 						<a class="btnStartDisplay" href="Javascript:" onclick="submit_book_<%= book.id %>.submit();" name="gray" style="float:right;">
-							<div>
-								<div style="text-align: center;">
-									<% if(available == 0) %>
-										return this book
-									<% else %>
-										rent this book
-									<% end %>
-								</div>
-							</div>
+							<% if(available == 0) %>
+								return this book
+							<% else %>
+								rent this book
+							<% end %>
 						</a>
 						<%= form_for :rent, :url => "/rent/new", :html => {:name => "submit_book_#{book.id}"} do |f| %>
 							<%= f.hidden_field :book_id, :value => book.id %>
@@ -59,11 +57,13 @@
 								if(last_rent.date.to_time < (Time.now - 7.days))
 								%>
 									<span style="color:red;">
+										Student is <%= distance_of_time_in_words_to_now((last_rent.date.to_time + 7.days).to_time) %> late
+									</span>
 								<% else %>
 									<span style="color:green;">
+										<%= distance_of_time_in_words_to_now(last_rent.date.to_time, false) %> since the book was rented
+									</span>
 								<% end %>
-									<%= distance_of_time_in_words_to_now(last_rent.date.to_time, false) %> since the book was rented
-								</span>
 								<%= f.hidden_field :user_id, :value => last_rent.user_id %>
 								<%= f.hidden_field :rent_type, :value => 1 %>
 							<% else %>

@@ -1,5 +1,7 @@
 Library::Application.routes.draw do
   match '/rent/new' => 'rent#new'
+  match '/login' => 'login#index'
+  match '/login/create' => 'login#create'
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

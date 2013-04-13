@@ -1,0 +1,18 @@
+<% provide(:title, 'Login Page - Library') %>
+<h1>Login</h1>
+
+<div class="login">
+	<%= form_for :user, :url => "/login/create", :html => {:name => "login"} do |f| %>
+		<div>
+			<%= f.label :email %><br>
+			<%= f.text_field :email %>
+		</div>
+		<div>
+			<%= f.label :password %><br>
+			<%= f.password_field :password %>
+		</div>
+		<div>
+			<a class="btnStartDisplay" href="Javascript:" onclick="login.submit();" name="gray" style="float:right;">login</a>
+		</div>
+	<% end %>
+</div>

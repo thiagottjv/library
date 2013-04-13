@@ -20,3 +20,14 @@ PONTOS EXTRAS
 * TDD
 * Deploy da aplicação Heroku
 * Autenticação com usuário senha
+
+----------------------------------------------------------------------------------------------------------------------
+Dados para testes:
+
+Login administrador:
+Email: thiagottjv@gmail.com
+Senha: 12345
+
+Login não-administrador:
+Email: sousaleal.fabio@gmail.com
+Senha: 12345

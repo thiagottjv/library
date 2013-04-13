@@ -13,3 +13,13 @@
 //= require jquery
 //= require jquery_ujs
 //= require_tree .
+jQuery(function(){
+	jQuery('a.btnStartDisplay.customBtnDisabled').live('click', function(e){
+		e.preventDefault();
+		return false;
+	});
+	jQuery('a.btnStartDisplay').each(function(){
+		var content = jQuery(this).html();
+		jQuery(this).html('<div>'+content+'</div>');
+	})
+});

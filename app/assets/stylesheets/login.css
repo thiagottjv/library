@@ -1,0 +1,29 @@
+div.login{
+	width: 229px;
+	text-align: left;
+	margin: 0 auto;
+}
+div.login input{
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: white;
+    background-image: none;
+    background-origin: padding-box;
+    border-color: #DDDDDD;
+    border-radius: 1px 1px 1px 1px;
+    border-style: solid;
+    border-width: 1px;
+    display: inline-block;
+    font-size: 15px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    height: 32px;
+    letter-spacing: normal;
+    line-height: normal;
+    margin: 0 0 5px;
+    outline-color: #DDDDDD;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 229px;
+}
